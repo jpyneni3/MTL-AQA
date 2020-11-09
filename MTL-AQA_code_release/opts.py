@@ -13,10 +13,10 @@
 randomseed = 0
 
 # directory containing dataset annotation files; this anno_n_splits_dir make the full path
-dataset_dir = '...'
+dataset_dir = '../MTL-AQA_dataset_release'
 
 # directory tp store train/test split lists and annotations
-anno_n_splits_dir = dataset_dir + '...'
+anno_n_splits_dir = dataset_dir + '/Ready_2_Use/MTL-AQA_split_0_data'
 
 # directory containing extracted frames
 dataset_frames_dir = '...'
