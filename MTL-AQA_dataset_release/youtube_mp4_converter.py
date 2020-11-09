@@ -11,7 +11,7 @@ def youtube_mp3_converter(youtube_link, download_path, video_num):
 	print("finished youtube to mp4 download of video : ", video.title)
 
 # parse video list
-video_list_path = "MTL-AQA/MTL-AQA_dataset_release/Video_List.xlsx"
+video_list_path = "Video_List.xlsx"
 youtube_links_df = pd.read_excel(video_list_path, sheet_name=None)
 sheet = youtube_links_df['Sheet1']
 video_nums = sheet['Sr. No.']
