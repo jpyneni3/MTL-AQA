@@ -19,7 +19,7 @@ dataset_dir = '../MTL-AQA_dataset_release'
 anno_n_splits_dir = dataset_dir + '/Ready_2_Use/MTL-AQA_split_0_data'
 
 # directory containing extracted frames
-dataset_frames_dir = '...'
+dataset_frames_dir = dataset_dir + '/whole_videos_frames'
 
 # sample length in terms of no of frames
 sample_length = 103
