@@ -18,7 +18,7 @@ video_nums = sheet['Sr. No.']
 video_links = sheet['Video']
 indices = len(video_nums)
 video_num_link_map = {}
-for idx in range(5,len(video_nums)):
+for idx in range(len(video_nums)):
 	print(str(video_nums[idx]))
 	video_num_link_map[video_nums[idx]] = video_links[idx]
 
