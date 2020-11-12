@@ -235,7 +235,7 @@ def main():
 
     # actual training, testing loops
     for epoch in range(100):
-        saving_dir = 'saved_model' # ADDED PATH FOR SAVING DIRECTORY 
+        saving_dir = 'saved_model_small' # ADDED PATH FOR SAVING DIRECTORY 
         print('-------------------------------------------------------------------------------------------------------')
         for param_group in optimizer.param_groups:
             print('Current learning rate: ', param_group['lr'])
