@@ -2,7 +2,6 @@
 *.jpg
 *.pickle
 __pycache__/
-saved_model/
 saved_model_MSCADC/
 C3DAVG_model/
-saved_model_small/
+c3davg_140_saved/
