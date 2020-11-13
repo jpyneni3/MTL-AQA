@@ -16,7 +16,7 @@ randomseed = 0
 dataset_dir = '../MTL-AQA_dataset_release'
 
 # directory tp store train/test split lists and annotations
-anno_n_splits_dir = dataset_dir + '/Ready_2_Use/smaller_training_sets/size_140'
+anno_n_splits_dir = dataset_dir + '/Ready_2_Use/MTL-AQA_split_0_data'
 
 # directory containing extracted frames
 dataset_frames_dir = dataset_dir + '/whole_videos_frames'
