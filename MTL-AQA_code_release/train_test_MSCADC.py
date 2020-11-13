@@ -221,7 +221,7 @@ def main():
 
     # actual training, testing loops
     for epoch in range(max_epochs):
-        saving_dir = 'saved_model_MSCADC'
+        saving_dir = 'mscadc_140_saved'
         print('-------------------------------------------------------------------------------------------------------')
         for param_group in optimizer.param_groups:
             print('Current learning rate: ', param_group['lr'])
