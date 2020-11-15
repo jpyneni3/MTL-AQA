@@ -24,18 +24,21 @@ torch.manual_seed(randomseed); torch.cuda.manual_seed_all(randomseed); random.se
 
 class S2VTModel(nn.Module):
     def __init__(self, vocab_size, max_len, dim_hidden, dim_word, dim_vid=2904, sos_id=1, eos_id=0,
-                 n_layers=1, rnn_cell='gru', rnn_dropout_p=0.2):
+                 n_layers=1, rnn_cell='gru', rnn_dropout_p=0.2, use_attention=False):
         super(S2VTModel, self).__init__()
-        self.attn = self.Linear(dim_vid, dim_hidden)
+        self.use_attention = use_attention
+        if use_attention:
+            self.attn = self.Linear(dim_vid, dim_hidden)
         if rnn_cell.lower() == 'lstm':
             self.rnn_cell = nn.LSTM
         elif rnn_cell.lower() == 'gru':
             self.rnn_cell = nn.GRU
         # Changed input dim to dim_hidden to account for attention
-        self.rnn1 = self.rnn_cell(dim_hidden, dim_hidden, n_layers,
-                                  batch_first=True, dropout=rnn_dropout_p)
-        # self.rnn1 = self.rnn_cell(dim_vid, dim_hidden, n_layers,
-        #                           batch_first=True, dropout=rnn_dropout_p)
+        if use_attention:
+            self.rnn1 = self.rnn_cell(dim_hidden, dim_hidden, n_layers, batch_first=True, dropout=rnn_dropout_p)
+        else:
+            self.rnn1 = self.rnn_cell(dim_vid, dim_hidden, n_layers, batch_first=True, dropout=rnn_dropout_p)
+
         self.rnn2 = self.rnn_cell(dim_hidden + dim_word, dim_hidden, n_layers,
                                   batch_first=True, dropout=rnn_dropout_p)
         self.dim_vid = dim_vid
@@ -73,10 +76,11 @@ class S2VTModel(nn.Module):
             for i in range(self.max_length - 1):
                 target_variable = target_variable.type(torch.LongTensor).cuda()
                 current_words = self.embedding(target_variable[:, i])
-                attention = self.attn(padding_frames)
-                # Pass through attention
-                output1, state1 = self.rnn1(attention, state1)
-                # output1, state1 = self.rnn1(padding_frames, state1)
+                if self.use_attention:
+                    attention = self.attn(padding_frames)
+                    output1, state1 = self.rnn1(attention, state1)
+                else:
+                    output1, state1 = self.rnn1(padding_frames, state1)
                 input2 = torch.cat((output1, current_words.unsqueeze(1)), dim=2)
                 output2, state2 = self.rnn2(input2, state2)
                 logits = self.out(output2.squeeze(1))
@@ -88,10 +92,11 @@ class S2VTModel(nn.Module):
             for i in range(self.max_length - 1):
                 self.rnn1.flatten_parameters()
                 self.rnn2.flatten_parameters()
-                # Pass through attention
-                attention = self.attn(padding_frames)
-                output1, state1 = self.rnn1(attention, state1)
-                # output1, state1 = self.rnn1(padding_frames, state1)
+                if self.use_attention:
+                    attention = self.attn(padding_frames)
+                    output1, state1 = self.rnn1(attention, state1)
+                else:
+                    output1, state1 = self.rnn1(padding_frames, state1)
                 input2 = torch.cat(
                     (output1, current_words.unsqueeze(1)), dim=2)
                 output2, state2 = self.rnn2(input2, state2)
