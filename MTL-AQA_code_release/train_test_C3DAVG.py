@@ -236,7 +236,7 @@ def main():
 
     # actual training, testing loops
     for epoch in range(100):
-        saving_dir = 'c3davg_140_saved' # ADDED PATH FOR SAVING DIRECTORY 
+        saving_dir = 'c3davg_140_saved' # ADDED PATH FOR SAVING DIRECTORY
         print('-------------------------------------------------------------------------------------------------------')
         for param_group in optimizer.param_groups:
             print('Current learning rate: ', param_group['lr'])
@@ -257,7 +257,9 @@ def main():
 
 if __name__ == '__main__':
     # loading the altered C3D backbone (ie C3D upto before fc-6)
-    model_CNN_pretrained_dict = torch.load('c3d.pickle')
+    
+    # model_CNN_pretrained_dict = torch.load('c3d.pickle')
+    model_CNN_pretrained_dict = torch.load('S3D_kinetics400.pt')
     #model_CNN = C3D_altered()
     model_CNN = S3D(num_classes)
     model_CNN_dict = model_CNN.state_dict()

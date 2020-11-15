@@ -25,9 +25,9 @@ dataset_frames_dir = dataset_dir + '/whole_videos_frames'
 sample_length = 103
 
 # input data dims; C3D-AVG:112; MSCADC: 180
-C, H, W = 3,112,112#3,180,180#
+C, H, W = 3,180,180#3,112,112#
 # image resizing dims; C3D-AVG: 171,128; MSCADC: 640,360
-input_resize = 171,128#640,360#171,128#
+input_resize = 640,360#171,128#
 # temporal augmentation range
 temporal_aug_min = -3; temporal_aug_max = 3
 
@@ -41,7 +41,7 @@ vocab_size = 5779
 
 caption_lstm_dim_hidden = 512
 caption_lstm_dim_word = 512
-caption_lstm_dim_vid = 8192 #C3D-AVG: 8192; MSCADC: 1200
+caption_lstm_dim_vid = 1200 #C3D-AVG: 8192; MSCADC: 1200
 caption_lstm_cell_type = 'gru'
 caption_lstm_num_layers = 2
 caption_lstm_dropout = 0.5
@@ -62,4 +62,3 @@ base_learning_rate = 0.0001
 
 temporal_stride = 16
 
-num_classes = 8192

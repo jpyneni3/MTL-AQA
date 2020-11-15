@@ -21,7 +21,7 @@ from models.MSCADC.body import C3D_dilated_body
 from models.MSCADC.head_fs_2 import C3D_dilated_head_fs
 from models.MSCADC.head_dive_classifier import C3D_dilated_head_classifier
 from models.MSCADC.head_captions import S2VTModel
-from opts import *
+from opts_mscadc import *
 from utils import utils_1
 import numpy as np
 
