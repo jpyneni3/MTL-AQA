@@ -5,3 +5,4 @@ __pycache__/
 saved_model_MSCADC/
 C3DAVG_model/
 c3davg_140_saved/
+*.pt
