@@ -55,8 +55,8 @@ class S2VTModel(nn.Module):
     def forward(self, vid_feats, target_variable=None, mode='train', opt={}):
         batch_size, n_frames, _ = vid_feats.shape
 
-        # Passing through attention
-        attention = self.attn(vid_feats)
+        if self.use_attention:
+            attention = self.attn(vid_feats)
 
         padding_words = Variable(vid_feats.data.new(batch_size, n_frames, self.dim_word)).zero_()
         padding_frames = Variable(vid_feats.data.new(batch_size, 1, self.dim_vid)).zero_()
@@ -64,9 +64,11 @@ class S2VTModel(nn.Module):
         state2 = None
 
         # Pass attention through rnn1
-        output1, state1 = self.rnn1(attention, state1)
+        if self.use_attention:
+            output1, state1 = self.rnn1(attention, state1)
+        else:
+            output1, state1 = self.rnn1(vid_feats, state1)
 
-        # output1, state1 = self.rnn1(vid_feats, state1)
         input2 = torch.cat((output1, padding_words), dim=2)
         output2, state2 = self.rnn2(input2, state2)
 
