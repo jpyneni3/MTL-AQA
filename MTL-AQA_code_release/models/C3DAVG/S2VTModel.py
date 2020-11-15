@@ -28,7 +28,7 @@ class S2VTModel(nn.Module):
         super(S2VTModel, self).__init__()
         self.use_attention = use_attention
         if use_attention:
-            self.attn = self.Linear(dim_vid, dim_hidden)
+            self.attn = nn.Linear(dim_vid, dim_hidden)
         if rnn_cell.lower() == 'lstm':
             self.rnn_cell = nn.LSTM
         elif rnn_cell.lower() == 'gru':
