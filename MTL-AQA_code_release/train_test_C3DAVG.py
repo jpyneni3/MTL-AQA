@@ -30,6 +30,14 @@ import numpy as np
 torch.manual_seed(randomseed); torch.cuda.manual_seed_all(randomseed); random.seed(randomseed); np.random.seed(randomseed)
 torch.backends.cudnn.deterministic=True
 
+current_run = 1 # CHANGE THIS FOR LOG FILE (BEFORE RUNNING HAPPENS)
+train_logging_file_name = "train_logging_file_" + str(current_run) + ".txt"
+train_logging_file = open(train_logging_file_name,"x")
+train_logging_file.close()
+test_logging_file_name = "train_testing_file_" + str(current_run) + ".txt"
+test_logging_file = open(test_logging_file_name, "x")
+test_logging_file.close()
+
 
 def save_model(model, model_name, epoch, path):
     model_path = os.path.join(path, '%s_%d.pth' % (model_name, epoch))
@@ -106,12 +114,19 @@ def train_phase(train_dataloader, optimizer, criterions, epoch):
         optimizer.step()
 
         if iteration % 20 == 0:
-            print('Epoch: ', epoch, ' Iter: ', iteration, ' Loss: ', loss, ' FS Loss: ', loss_final_score, end="")
+            train_logging_file = open(train_logging_file_name, "a")
+            train_output = f"Epoch: {epoch}, Iter: {iteration}, Loss: {loss}, FS Loss: {loss_final_score}"
+            print(train_output, end="")
+            train_logging_file.write(train_output + "\n")
             if with_dive_classification:
                   print(' Cls Loss: ', loss_cls, end="")
+                  train_logging_file.write(f"Cls Loss: {loss_cls}" + "\n")
             if with_caption:
                   print(' Cap Loss: ', loss_caption, end="")
+                  train_logging_file.write(f"Cap Loss: {loss_caption}" + "\n")
             print(' ')
+            train_logging_file.write("\n")
+            train_logging_file.close()
         iteration += 1
 
 
@@ -171,6 +186,7 @@ def test_phase(test_dataloader):
                     pred_ss_no.extend(np.argwhere(temp_ss_no[i] == max(temp_ss_no[i]))[0])
                     pred_tw_no.extend(np.argwhere(temp_tw_no[i] == max(temp_tw_no[i]))[0])
 
+        test_logging_file = open(test_logging_file_name, "a")
         if with_dive_classification:
             position_correct = 0; armstand_correct = 0; rot_type_correct = 0; ss_no_correct = 0; tw_no_correct = 0
             for i in range(len(pred_position)):
@@ -191,11 +207,15 @@ def test_phase(test_dataloader):
             tw_no_accu = tw_no_correct / len(pred_tw_no) * 100
             print('Accuracies: Position: ', position_accu, ' Armstand: ', armstand_accu, ' Rot_type: ', rot_type_accu,
                   ' SS_no: ', ss_no_accu, ' TW_no: ', tw_no_accu)
+            test_logging_file.write(f"Position: {position_accu}, Armstand: {armstand_accu}, Rot_type: {rot_type_accu}, SS_no: {ss_no_accu}, TW_no: {tw_no_accu}" + "\n")
 
         rho, p = stats.spearmanr(pred_scores, true_scores)
         print('Predicted scores: ', pred_scores)
         print('True scores: ', true_scores)
         print('Correlation: ', rho)
+        test_logging_file.write(f"Correlation: {rho}" + "\n")
+        test_logging_file.write("\n")
+        test_logging_file.close()
 
 
 def main():
@@ -236,7 +256,7 @@ def main():
 
     # actual training, testing loops
     for epoch in range(100):
-        saving_dir = 'c3davg_140_saved' # ADDED PATH FOR SAVING DIRECTORY
+        saving_dir = 'c3davg_140_saved_s3d' # ADDED PATH FOR SAVING DIRECTORY
         print('-------------------------------------------------------------------------------------------------------')
         for param_group in optimizer.param_groups:
             print('Current learning rate: ', param_group['lr'])
