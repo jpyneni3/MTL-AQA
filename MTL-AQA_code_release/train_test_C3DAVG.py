@@ -18,6 +18,7 @@ import scipy.stats as stats
 import torch.optim as optim
 import torch.nn as nn
 from models.C3DAVG.C3D_altered import C3D_altered
+from models.C3DAVG.S3D_model import S3D
 from models.C3DAVG.my_fc6 import my_fc6
 from models.C3DAVG.score_regressor import score_regressor
 from models.C3DAVG.dive_classifier import dive_classifier
@@ -257,7 +258,8 @@ def main():
 if __name__ == '__main__':
     # loading the altered C3D backbone (ie C3D upto before fc-6)
     model_CNN_pretrained_dict = torch.load('c3d.pickle')
-    model_CNN = C3D_altered()
+    #model_CNN = C3D_altered()
+    model_CNN = S3D(num_classes)
     model_CNN_dict = model_CNN.state_dict()
     model_CNN_pretrained_dict = {k: v for k, v in model_CNN_pretrained_dict.items() if k in model_CNN_dict}
     model_CNN_dict.update(model_CNN_pretrained_dict)
