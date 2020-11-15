@@ -34,7 +34,7 @@ current_run = 1 # CHANGE THIS FOR LOG FILE (BEFORE RUNNING HAPPENS)
 train_logging_file_name = "train_logging_file_" + str(current_run) + ".txt"
 train_logging_file = open(train_logging_file_name,"x")
 train_logging_file.close()
-test_logging_file_name = "train_testing_file_" + str(current_run) + ".txt"
+test_logging_file_name = "test_logging_file_" + str(current_run) + ".txt"
 test_logging_file = open(test_logging_file_name, "x")
 test_logging_file.close()
 
