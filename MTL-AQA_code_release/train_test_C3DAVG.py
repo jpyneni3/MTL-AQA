@@ -310,7 +310,8 @@ if __name__ == '__main__':
         model_caption = S2VTModel(vocab_size, max_cap_len, caption_lstm_dim_hidden,
                                   caption_lstm_dim_word, caption_lstm_dim_vid,
                                   rnn_cell=caption_lstm_cell_type, n_layers=caption_lstm_num_layers,
-                                  rnn_dropout_p=caption_lstm_dropout)
+                                  rnn_dropout_p=caption_lstm_dropout,
+                                  use_attention=True)
         model_caption = model_caption.cuda()
         print('Using Captioning Loss')
 
