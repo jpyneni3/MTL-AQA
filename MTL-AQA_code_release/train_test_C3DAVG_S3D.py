@@ -31,10 +31,10 @@ torch.manual_seed(randomseed); torch.cuda.manual_seed_all(randomseed); random.se
 torch.backends.cudnn.deterministic=True
 
 current_run = 1 # CHANGE THIS FOR LOG FILE (BEFORE RUNNING HAPPENS)
-train_logging_file_name = "c3d_attn_train_logging_file_" + str(current_run) + ".txt"
+train_logging_file_name = "train_logging_file_" + str(current_run) + ".txt"
 train_logging_file = open(train_logging_file_name,"x")
 train_logging_file.close()
-test_logging_file_name = "c3d_attn_test_logging_file_" + str(current_run) + ".txt"
+test_logging_file_name = "test_logging_file_" + str(current_run) + ".txt"
 test_logging_file = open(test_logging_file_name, "x")
 test_logging_file.close()
 
@@ -256,7 +256,7 @@ def main():
 
     # actual training, testing loops
     for epoch in range(100):
-        saving_dir = 'c3davg_140_saved_attn' # ADDED PATH FOR SAVING DIRECTORY
+        saving_dir = 'c3davg_140_saved_s3d' # ADDED PATH FOR SAVING DIRECTORY
         print('-------------------------------------------------------------------------------------------------------')
         for param_group in optimizer.param_groups:
             print('Current learning rate: ', param_group['lr'])
@@ -278,11 +278,11 @@ def main():
 if __name__ == '__main__':
     # loading the altered C3D backbone (ie C3D upto before fc-6)
 
-    model_CNN_pretrained_dict = torch.load('c3d.pickle')
-    #model_CNN_pretrained_dict = torch.load('S3D_kinetics400.pt')
-    model_CNN = C3D_altered()
-    #print("using s3d")
-    #model_CNN = S3D(num_classes)
+    # model_CNN_pretrained_dict = torch.load('c3d.pickle')
+    model_CNN_pretrained_dict = torch.load('S3D_kinetics400.pt')
+    #model_CNN = C3D_altered()
+    print("using s3d")
+    model_CNN = S3D(num_classes)
     print(model_CNN)
     model_CNN_dict = model_CNN.state_dict()
     model_CNN_pretrained_dict = {k: v for k, v in model_CNN_pretrained_dict.items() if k in model_CNN_dict}
@@ -310,8 +310,7 @@ if __name__ == '__main__':
         model_caption = S2VTModel(vocab_size, max_cap_len, caption_lstm_dim_hidden,
                                   caption_lstm_dim_word, caption_lstm_dim_vid,
                                   rnn_cell=caption_lstm_cell_type, n_layers=caption_lstm_num_layers,
-                                  rnn_dropout_p=caption_lstm_dropout,
-                                  use_attention=True)
+                                  rnn_dropout_p=caption_lstm_dropout)
         model_caption = model_caption.cuda()
         print('Using Captioning Loss')
 
