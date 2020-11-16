@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-file_name = "train_logging_file_1.txt"
-experiment_name = "C3DAVG w/ SGD Backbone"
+file_name = "c3d_attn_train_logging_file_1.txt"
+experiment_name = "C3DAVG w/ Attenion"
 mode = "train" #or test
 f = open(file_name, 'r')
 lines = f.readlines()
@@ -35,8 +35,8 @@ for i in range(num_epochs):
     cls_loss = float(last_iter[-3].split(':')[1])
     cap_loss = float(last_iter[-2].split(':')[1])
 
-    losses.append(first_loss)
-    losses.append(middle_loss)
+    # losses.append(first_loss)
+    # losses.append(middle_loss)
     losses.append(loss)
     fs_losses.append(fs_loss)
     cls_losses.append(cls_loss)
