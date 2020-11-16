@@ -12,3 +12,12 @@ Code used in the following, also if you find it useful, please consider citing t
 Set the options in opts.py file, and train_test files.
 
 Sports-1M pretrained C3D weights available from here: http://imagelab.ing.unimore.it/files/c3d_pytorch/c3d.pickle
+
+
+train_logging_file_1.txt
+
+|  Experiment Number |  Description | Train  |  Test |  
+|---|---|---|---|
+| 1 | C3DAVG model with SGD Backbone  |  train_logging_file_1 | test_logging_file_1  |  
+| 2 |   |   |   |   
+|3  |   |   |   | 
