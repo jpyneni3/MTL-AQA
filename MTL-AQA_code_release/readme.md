@@ -15,8 +15,9 @@ Sports-1M pretrained C3D weights available from here: http://imagelab.ing.unimor
 
 
 
-|  Experiment Number |  Description | Train  |  Test |  
-|---|---|---|---|
-| 1 | C3DAVG model with SGD Backbone  |  train_logging_file_1 | test_logging_file_1  |  
-| 2 | C3DAVG model with Attention  | c3d_attn_train_logging_file_1.txt   | c3d_attn_test_logging_file_1.txt  |   
-|3  |   |   |   |
+|  Experiment Number |  Description | Train  |  Test |  Model Folder |
+|---|---|---|---| ---|
+| 1 | C3DAVG model   |  c3davg_train_logging_file_1 | c3davg_test_logging_file_1  | c3davg_140_saved |
+| 2 | C3DAVG model with SGD Backbone  |  train_logging_file_1 | test_logging_file_1  |c3davg_140_saved_s3d |  
+| 3 | C3DAVG model with Attention  | c3d_attn_train_logging_file_1.txt   | c3d_attn_test_logging_file_1.txt  |   |
+|4  |   |   |   | |
