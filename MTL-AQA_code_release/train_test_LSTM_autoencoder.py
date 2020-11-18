@@ -324,7 +324,7 @@ if __name__ == '__main__':
                                   caption_lstm_dim_word, caption_lstm_dim_vid,
                                   rnn_cell=caption_lstm_cell_type, n_layers=caption_lstm_num_layers,
                                   rnn_dropout_p=caption_lstm_dropout,
-                                  use_attention=True)
+                                  use_attention=False)
         model_caption = model_caption.cuda()
         print('Using Captioning Loss')
 
