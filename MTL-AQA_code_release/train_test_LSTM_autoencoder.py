@@ -82,6 +82,8 @@ def train_phase(train_dataloader, optimizer, criterions, epoch):
 
         batch_size, C, frames, H, W = video.shape
         clip_feats = torch.Tensor([]).cuda()
+        print("video shape")
+        print(video.shape)
 
         for i in np.arange(0, frames - 17, 16):
             clip = video[:, :, i:i + 16, :, :]
@@ -175,8 +177,6 @@ def test_phase(test_dataloader):
             video = data['video'].transpose_(1, 2).cuda()
 
             batch_size, C, frames, H, W = video.shape
-            print("video shape")
-            print(video.shape)
             clip_feats = torch.Tensor([]).cuda()
 
             for i in np.arange(0, frames - 17, 16):
@@ -256,7 +256,7 @@ def main():
         parameters_2_optimize_named = parameters_2_optimize_named + list(model_caption.named_parameters())
 
     optimizer = optim.Adam(parameters_2_optimize, lr=0.0001)
-    print('Parameters that will be learnt: ', parameters_2_optimize_named)
+    # print('Parameters that will be learnt: ', parameters_2_optimize_named)
 
     criterions = {}
     criterion_final_score = nn.MSELoss()
