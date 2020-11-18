@@ -5,6 +5,7 @@ file_name = "c3d_attn_train_logging_file_1.txt"
 file_name2 = "c3davg_train_logging_file_1.txt"
 file_name3 = "train_logging_file_1.txt"
 file_name4 = "s3d_attn_train_logging_file_1.txt"
+file_name5 = "c3davg_8_gru_attn_train_logging_file_1.txt"
 
 experiment_name = "Training Losses"
 
@@ -22,6 +23,9 @@ lines3 = f3.readlines()
 
 f4 = open(file_name4, 'r')
 lines4 = f4.readlines()
+
+f5 = open(file_name5, 'r')
+lines5 = f5.readlines()
 
 mode_label = None
 if mode == 'train':
@@ -140,7 +144,30 @@ for i in range(len(lines4)/12):
     # losses.append(middle_loss)
     losses_4.append(loss)
 
+losses_5 = []
 
+
+for i in range(len(lines5)/12):
+
+    epoch = lines5[i*12:i*12+12]
+    first_iter = epoch[0:4]
+    second_iter = epoch[4:8]
+    last_iter = epoch[8:]
+
+    first_loss = float(first_iter[0].split(',')[2].split(':')[1])
+    middle_loss = float(second_iter[0].split(',')[2].split(':')[1])
+
+
+    first_line = last_iter[0]
+    first_line = first_line.split(',')
+    first_line = [i.split(':') for i in first_line[2:]]
+    loss = float(first_line[0][1])
+
+
+
+    # losses.append(first_loss)
+    # losses.append(middle_loss)
+    losses_5.append(loss)
 
 def best_fit(X, Y):
 
@@ -182,10 +209,11 @@ def best_fit(X, Y):
 
 
 
-plt.plot(range(len(losses)), losses, '-r', label = 'c3d attn')
-plt.plot(range(len(losses_2)), losses_2, '-b', label = 'c3d')
-plt.plot(range(len(losses_3)), losses_3, '-g', label = 's3d')
-plt.plot(range(len(losses_4)), losses_4, '-k', label = 's3d attn')
+# plt.plot(range(len(losses[:20])), losses[:20], '-r', label = 'c3d attn')
+plt.plot(range(len(losses_2[:20])), losses_2[:20], '-b', label = 'c3d')
+# plt.plot(range(len(losses_3)[:20]), losses_3[:20], '-g', label = 's3d')
+# plt.plot(range(len(losses_4[:20])), losses_4[:20], '-k', label = 's3d attn')
+plt.plot(range(len(losses_5[:20])), losses_5[:20], '-m', label = '8 gru attn')
 plt.legend()
 
 
