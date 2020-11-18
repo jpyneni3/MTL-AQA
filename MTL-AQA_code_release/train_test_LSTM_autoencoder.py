@@ -20,6 +20,7 @@ import torch.nn as nn
 from models.C3DAVG.C3D_altered import C3D_altered
 from models.C3DAVG.S3D_model import S3D
 from models.C3DAVG.LSTM_autoencoder import AutoEncoderRNN # for lstm
+from models.C3DAVG.LSTM_autoencoder import EncoderRNN # for lstm
 from models.C3DAVG.img_to_vec import Img2Vec # for lstm
 from models.C3DAVG.my_fc6 import my_fc6
 from models.C3DAVG.score_regressor import score_regressor
@@ -84,16 +85,25 @@ def train_phase(train_dataloader, optimizer, criterions, epoch):
 
         for i in np.arange(0, frames - 17, 16):
             clip = video[:, :, i:i + 16, :, :]
-            # WHERE WE NEED TO CONVERT IMG TO VECT
-            clip = extractor.get_vec(clip)
+            #clip = extractor.get_vec(clip)
             clip_feats_temp = model_CNN(clip)
             clip_feats_temp.unsqueeze_(0)
             clip_feats_temp.transpose_(0, 1)
             clip_feats = torch.cat((clip_feats, clip_feats_temp), 1)
+        print("CLIP FEAT AVG TRAIN SHAPE BEFORE: ", clip_feats.shape)
         clip_feats_avg = clip_feats.mean(1)
+        print("CLIP FEAT AVG TRAIN SHAPE AFTER: ", clip_feats_avg.shape)
+        # LSTM encoder for feature extraction
+        #input_size = torch.prod(clip_feats.shape)
+        #hidden_size = 8192
+        #num_layers = 2
+        #bidirectional = False
+        #lstm_feature_encoder = EncoderRNN(input_size, hidden_size, num_layers, bidirectional)
+        #lstm_feature_encoder.cuda()
+        #clip_feats_lstm = lstm_feature_encoder(clip_feats)
 
         sample_feats_fc6 = model_my_fc6(clip_feats_avg)
-
+        #sample_feats_fc6 = model_my_fc6(clip_feats_lstm)
         pred_final_score = model_score_regressor(sample_feats_fc6)
         if with_dive_classification:
             (pred_position, pred_armstand, pred_rot_type, pred_ss_no,
@@ -169,15 +179,18 @@ def test_phase(test_dataloader):
 
             for i in np.arange(0, frames - 17, 16):
                 clip = video[:, :, i:i + 16, :, :]
-                # CONVERT CLIP TO IMG TO VECT
-                clip = extractor.get_vec(clip)
+                #clip = extractor.get_vec(clip)
                 clip_feats_temp = model_CNN(clip)
                 clip_feats_temp.unsqueeze_(0)
                 clip_feats_temp.transpose_(0, 1)
                 clip_feats = torch.cat((clip_feats, clip_feats_temp), 1)
+            print("CLIP FEAT AVG TRAIN SHAPE BEFORE: ", clip_feats.shape)
             clip_feats_avg = clip_feats.mean(1)
+            print("CLIP FEAT AVG TRAIN SHAPE AFTER: ", clip_feats_avg.shape)
+            #clip_feats_lstm = lstm_feature_encoder(clip_feats)
 
             sample_feats_fc6 = model_my_fc6(clip_feats_avg)
+            #sample_feats_fc6 = model_my_fc6(clip_feats_lstm)
             temp_final_score = model_score_regressor(sample_feats_fc6)
             pred_scores.extend([element[0] for element in temp_final_score.data.cpu().numpy()])
             if with_dive_classification:
@@ -288,19 +301,16 @@ def main():
 
 if __name__ == '__main__':
     # loading the altered C3D backbone (ie C3D upto before fc-6)
-
-    # PRETRAINED DICT NOT NEEDED FOR LSTM
-    #model_CNN_pretrained_dict = torch.load('c3d.pickle')
+    model_CNN_pretrained_dict = torch.load('c3d.pickle')
     #model_CNN_pretrained_dict = torch.load('S3D_kinetics400.pt')
-    #model_CNN = C3D_altered()
+    model_CNN = C3D_altered()
     #print("using s3d")
     #model_CNN = S3D(num_classes)
-    model_CNN = AutoEncoderRNN()
     print(model_CNN)
-    # model_CNN_dict = model_CNN.state_dict()
-    # model_CNN_pretrained_dict = {k: v for k, v in model_CNN_pretrained_dict.items() if k in model_CNN_dict}
-    # model_CNN_dict.update(model_CNN_pretrained_dict)
-    # model_CNN.load_state_dict(model_CNN_dict)
+    model_CNN_dict = model_CNN.state_dict()
+    model_CNN_pretrained_dict = {k: v for k, v in model_CNN_pretrained_dict.items() if k in model_CNN_dict}
+    model_CNN_dict.update(model_CNN_pretrained_dict)
+    model_CNN.load_state_dict(model_CNN_dict)
     model_CNN = model_CNN.cuda()
 
     # loading our fc6 layer
