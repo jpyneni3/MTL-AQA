@@ -182,10 +182,10 @@ def best_fit(X, Y):
 
 
 
-plt.plot(range(len(losses[:50])), losses[:50], '-r', label = 'c3d attn')
-plt.plot(range(len(losses_2[:50])), losses_2[:50], '-b', label = 'c3d')
-plt.plot(range(len(losses_3[:50])), losses_3[:50], '-g', label = 's3d')
-plt.plot(range(len(losses_4[:50])), losses_4[:50], '-k', label = 's3d attn')
+plt.plot(range(len(losses)), losses, '-r', label = 'c3d attn')
+plt.plot(range(len(losses_2)), losses_2, '-b', label = 'c3d')
+plt.plot(range(len(losses_3)), losses_3, '-g', label = 's3d')
+plt.plot(range(len(losses_4)), losses_4, '-k', label = 's3d attn')
 plt.legend()
 
 
@@ -193,4 +193,4 @@ plt.legend()
 plt.title(experiment_name, fontsize=20)
 plt.xlabel('Epoch', fontsize=18)
 plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
-plt.show()
+plt.savefig("Training Losses")
