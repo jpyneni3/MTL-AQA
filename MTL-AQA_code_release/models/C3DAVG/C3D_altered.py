@@ -64,7 +64,8 @@ class C3D_altered(nn.Module):
         h = self.relu(self.conv5a(h))
         h = self.relu(self.conv5b(h))
         h = self.pool5(h)
-
+        print("shape of h")
+        print(h.shape)
         h = h.view(-1, 8192)
         return h
 
@@ -72,6 +73,6 @@ class C3D_altered(nn.Module):
 """
 References
 ----------
-[1] Tran, Du, et al. "Learning spatiotemporal features with 3d convolutional networks." 
+[1] Tran, Du, et al. "Learning spatiotemporal features with 3d convolutional networks."
 Proceedings of the IEEE international conference on computer vision. 2015.
 """
