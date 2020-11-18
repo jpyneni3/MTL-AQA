@@ -175,6 +175,8 @@ def test_phase(test_dataloader):
             video = data['video'].transpose_(1, 2).cuda()
 
             batch_size, C, frames, H, W = video.shape
+            print("video shape")
+            print(video.shape)
             clip_feats = torch.Tensor([]).cuda()
 
             for i in np.arange(0, frames - 17, 16):
