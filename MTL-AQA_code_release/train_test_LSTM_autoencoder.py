@@ -88,7 +88,11 @@ def train_phase(train_dataloader, optimizer, criterions, epoch):
         for i in np.arange(0, frames - 17, 16):
             clip = video[:, :, i:i + 16, :, :]
             #clip = extractor.get_vec(clip)
+            print("shape of clip before cnn")
+            print(clip.shape)
             clip_feats_temp = model_CNN(clip)
+            print("shape after cnn")
+            print(clip_feats_temp.shape)
             clip_feats_temp.unsqueeze_(0)
             clip_feats_temp.transpose_(0, 1)
             clip_feats = torch.cat((clip_feats, clip_feats_temp), 1)
