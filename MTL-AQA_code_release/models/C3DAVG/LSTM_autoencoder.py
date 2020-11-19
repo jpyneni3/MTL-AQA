@@ -44,9 +44,11 @@ class EncoderRNN(nn.Module):
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
 
         # forward propagate lstm
-        out, _ = self.lstm(x, (h0, c0))  # out: tensor of shape (batch_size, seq_length, hidden_size)
+        out, (hn, cn) = self.lstm(x, (h0, c0))  # out: tensor of shape (batch_size, seq_length, hidden_size)
 
-        return out[:, -1, :].unsqueeze(1)
+        #return out[:, -1, :].unsqueeze(1)
+        return out[:, -1, :]
+        #return hn
 
 class DecoderRNN(nn.Module):
 

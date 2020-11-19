@@ -35,11 +35,11 @@ torch.backends.cudnn.deterministic=True
 
 current_run = 1 # CHANGE THIS FOR LOG FILE (BEFORE RUNNING HAPPENS)
 # train_logging_file_name = "c3davg_train_logging_file_" + str(current_run) + ".txt"
-train_logging_file_name = "train" + str(current_run) + ".txt"
+train_logging_file_name = "c3davg_lstm_encoder_train_logging_file_" + str(current_run) + ".txt"
 train_logging_file = open(train_logging_file_name,"x")
 train_logging_file.close()
 # test_logging_file_name = "c3davg_test_logging_file_" + str(current_run) + ".txt"
-test_logging_file_name = "test" + str(current_run) + ".txt"
+test_logging_file_name = "c3davg_lstm_encoder_test_logging_file_" + str(current_run) + ".txt"
 test_logging_file = open(test_logging_file_name, "x")
 test_logging_file.close()
 
@@ -88,32 +88,25 @@ def train_phase(train_dataloader, optimizer, criterions, epoch):
         for i in np.arange(0, frames - 17, 16):
             clip = video[:, :, i:i + 16, :, :]
             #clip = extractor.get_vec(clip)
-            print("shape of clip before cnn")
-            print(clip.shape)
+            #print("shape of clip before cnn")
+            #print(clip.shape)
             clip_feats_temp = model_CNN(clip)
-            print("shape after cnn")
-            print(clip_feats_temp.shape)
+            #print("shape after cnn")
+            #print(clip_feats_temp.shape)
             clip_feats_temp.unsqueeze_(0)
             clip_feats_temp.transpose_(0, 1)
-            print("shape after unsqueeze and transpose")
-            print(clip_feats_temp.shape)
+            #print("shape after unsqueeze and transpose")
+            #print(clip_feats_temp.shape)
             clip_feats = torch.cat((clip_feats, clip_feats_temp), 1)
-            print("final shape in the loop")
-            print(clip_feats.shape)
-        print("CLIP FEAT AVG TRAIN SHAPE BEFORE: ", clip_feats.shape)
-        clip_feats_avg = clip_feats.mean(1)
-        print("CLIP FEAT AVG TRAIN SHAPE AFTER: ", clip_feats_avg.shape)
-        # LSTM encoder for feature extraction
-        #input_size = torch.prod(clip_feats.shape)
-        #hidden_size = 8192
-        #num_layers = 2
-        #bidirectional = False
-        #lstm_feature_encoder = EncoderRNN(input_size, hidden_size, num_layers, bidirectional)
-        #lstm_feature_encoder.cuda()
-        #clip_feats_lstm = lstm_feature_encoder(clip_feats)
+            #print("final shape in the loop")
+            #print(clip_feats.shape)
+        #print("CLIP FEAT AVG TRAIN SHAPE BEFORE: ", clip_feats.shape)
+        #clip_feats_avg = clip_feats.mean(1)
+        #print("CLIP FEAT AVG TRAIN SHAPE AFTER: ", clip_feats_avg.shape)
 
-        sample_feats_fc6 = model_my_fc6(clip_feats_avg)
-        #sample_feats_fc6 = model_my_fc6(clip_feats_lstm)
+        clip_feats_lstm = lstm_feature_encoder(clip_feats)
+        #sample_feats_fc6 = model_my_fc6(clip_feats_avg)
+        sample_feats_fc6 = model_my_fc6(clip_feats_lstm)
         pred_final_score = model_score_regressor(sample_feats_fc6)
         if with_dive_classification:
             (pred_position, pred_armstand, pred_rot_type, pred_ss_no,
@@ -194,13 +187,15 @@ def test_phase(test_dataloader):
                 clip_feats_temp.unsqueeze_(0)
                 clip_feats_temp.transpose_(0, 1)
                 clip_feats = torch.cat((clip_feats, clip_feats_temp), 1)
-            print("CLIP FEAT AVG TRAIN SHAPE BEFORE: ", clip_feats.shape)
-            clip_feats_avg = clip_feats.mean(1)
-            print("CLIP FEAT AVG TRAIN SHAPE AFTER: ", clip_feats_avg.shape)
+            #print("CLIP FEAT AVG TRAIN SHAPE BEFORE: ", clip_feats.shape)
+            #clip_feats_avg = clip_feats.mean(1)
+            #print("CLIP FEAT AVG TRAIN SHAPE AFTER: ", clip_feats_avg.shape)
             #clip_feats_lstm = lstm_feature_encoder(clip_feats)
+            clip_feats_lstm = lstm_feature_encoder(clip_feats)
 
-            sample_feats_fc6 = model_my_fc6(clip_feats_avg)
-            #sample_feats_fc6 = model_my_fc6(clip_feats_lstm)
+            #sample_feats_fc6 = model_my_fc6(clip_feats_avg)
+            sample_feats_fc6 = model_my_fc6(clip_feats_lstm)
+
             temp_final_score = model_score_regressor(sample_feats_fc6)
             pred_scores.extend([element[0] for element in temp_final_score.data.cpu().numpy()])
             if with_dive_classification:
@@ -290,7 +285,7 @@ def main():
     # actual training, testing loops
     for epoch in range(100):
         # saving_dir = 'c3davg_140_saved' # ADDED PATH FOR SAVING DIRECTORY
-        saving_dir = '' # ADDED PATH FOR SAVING DIRECTORY
+        saving_dir = 'c3davg_lstm_encode' # ADDED PATH FOR SAVING DIRECTORY
         print('-------------------------------------------------------------------------------------------------------')
         for param_group in optimizer.param_groups:
             print('Current learning rate: ', param_group['lr'])
@@ -322,6 +317,15 @@ if __name__ == '__main__':
     model_CNN_dict.update(model_CNN_pretrained_dict)
     model_CNN.load_state_dict(model_CNN_dict)
     model_CNN = model_CNN.cuda()
+
+    # LSTM encoder for feature extraction
+    # clip_feats shape  = [3,6,8192]
+    input_size = 3
+    hidden_size = 8192
+    num_layers = 2
+
+    lstm_feature_encoder = EncoderRNN(input_size, hidden_size, num_layers, False)
+    lstm_feature_encoder.cuda()
 
     # loading our fc6 layer
     model_my_fc6 = my_fc6()
