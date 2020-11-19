@@ -320,7 +320,7 @@ if __name__ == '__main__':
 
     # LSTM encoder for feature extraction
     # clip_feats shape  = [3,6,8192]
-    input_size = 3
+    input_size = 8192
     hidden_size = 8192
     num_layers = 2
 
