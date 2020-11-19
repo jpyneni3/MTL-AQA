@@ -45,7 +45,7 @@ caption_lstm_dim_vid = 8192 #C3D-AVG: 8192; MSCADC: 1200
 # caption_lstm_cell_type = 'gru'
 caption_lstm_cell_type = 'lstm'
 # caption_lstm_num_layers = 2
-caption_lstm_num_layers = 8
+caption_lstm_num_layers = 32
 caption_lstm_dropout = 0.5
 caption_lstm_lr = 0.0001
 
