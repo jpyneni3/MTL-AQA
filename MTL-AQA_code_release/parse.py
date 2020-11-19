@@ -210,10 +210,10 @@ def best_fit(X, Y):
 
 
 # plt.plot(range(len(losses[:20])), losses[:20], '-r', label = 'c3d attn')
-plt.plot(range(len(losses_2[:20])), losses_2[:20], '-b', label = 'c3d')
+plt.plot(range(len(losses_2[:28])), losses_2[:28], '-b', label = 'c3d')
 # plt.plot(range(len(losses_3)[:20]), losses_3[:20], '-g', label = 's3d')
 # plt.plot(range(len(losses_4[:20])), losses_4[:20], '-k', label = 's3d attn')
-plt.plot(range(len(losses_5[:20])), losses_5[:20], '-m', label = '8 gru attn')
+plt.plot(range(len(losses_5[:28])), losses_5[:28], '-m', label = '8 gru attn')
 plt.legend()
 
 

@@ -64,8 +64,6 @@ class C3D_altered(nn.Module):
         h = self.relu(self.conv5a(h))
         h = self.relu(self.conv5b(h))
         h = self.pool5(h)
-        print("shape of h")
-        print(h.shape)
         h = h.view(-1, 8192)
         return h
 

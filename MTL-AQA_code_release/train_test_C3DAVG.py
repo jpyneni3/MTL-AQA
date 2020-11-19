@@ -32,11 +32,11 @@ torch.backends.cudnn.deterministic=True
 
 current_run = 1 # CHANGE THIS FOR LOG FILE (BEFORE RUNNING HAPPENS)
 # train_logging_file_name = "c3davg_train_logging_file_" + str(current_run) + ".txt"
-train_logging_file_name = "c3davg_8_gru_attn_train_logging_file_" + str(current_run) + ".txt"
+train_logging_file_name = "c3davg_8_lstm_attn_train_logging_file_" + str(current_run) + ".txt"
 train_logging_file = open(train_logging_file_name,"x")
 train_logging_file.close()
 # test_logging_file_name = "c3davg_test_logging_file_" + str(current_run) + ".txt"
-test_logging_file_name = "c3davg_8_gru_attn_test_logging_file_" + str(current_run) + ".txt"
+test_logging_file_name = "c3davg_8_lstm_attn_test_logging_file_" + str(current_run) + ".txt"
 test_logging_file = open(test_logging_file_name, "x")
 test_logging_file.close()
 
@@ -259,7 +259,7 @@ def main():
     # actual training, testing loops
     for epoch in range(100):
         # saving_dir = 'c3davg_140_saved' # ADDED PATH FOR SAVING DIRECTORY
-        saving_dir = 'c3davg_8_gru_attn_140_saved' # ADDED PATH FOR SAVING DIRECTORY
+        saving_dir = 'c3davg_8_lstm_attn_140_saved' # ADDED PATH FOR SAVING DIRECTORY
         print('-------------------------------------------------------------------------------------------------------')
         for param_group in optimizer.param_groups:
             print('Current learning rate: ', param_group['lr'])
