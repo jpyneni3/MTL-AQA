@@ -12,3 +12,4 @@ mscadc_140_saved/
 c3davg_8_gru_attn_140_saved/
 *.pt
 c3davg_8_lstm_attn_140_saved/
+c3davg_lstm_encode/

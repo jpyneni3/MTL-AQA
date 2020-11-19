@@ -6,6 +6,7 @@ file_name2 = "c3davg_test_logging_file_1.txt"
 file_name3 = "test_logging_file_1.txt"
 file_name4 = "s3d_attn_test_logging_file_1.txt"
 file_name5 = "c3davg_8_gru_attn_test_logging_file_1.txt"
+file_name6 = "c3davg_8_lstm_attn_test_logging_file_1.txt"
 
 experiment_name = "Testing Correlations"
 
@@ -27,6 +28,9 @@ lines4 = f4.readlines()
 
 f5 = open(file_name5, 'r')
 lines5 = f5.readlines()
+
+f6 = open(file_name6, 'r')
+lines6= f6.readlines()
 
 mode_label = None
 if mode == 'train':
@@ -64,11 +68,19 @@ for i in range(len(lines5)/3):
     corr = float(epoch[1:2][0].split(':')[1])
     corr5.append(corr)
 
+corr6 = []
+for i in range(len(lines6)/3):
+    epoch = lines6[i*3:i*3+3]
+    corr = float(epoch[1:2][0].split(':')[1])
+    corr6.append(corr)
+
+
 # plt.plot(range(len(corr1)), corr1, '-r', label = 'c3d attn')
 plt.plot(range(len(corr2)), corr2, '-b', label = 'c3d')
 # plt.plot(range(len(corr3)), corr3, '-g', label = 's3d')
 # plt.plot(range(len(corr4)), corr4, '-k', label = 's3d attn')
 plt.plot(range(len(corr5)), corr5, '-m', label = '8 gru attn')
+plt.plot(range(len(corr6)), corr6, '-c', label = '8 lstm attn')
 plt.legend()
 
 
