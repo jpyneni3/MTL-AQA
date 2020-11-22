@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+dir = "logs/"
 file_name = "c3d_attn_test_logging_file_1.txt"
 file_name2 = "c3davg_test_logging_file_1.txt"
 file_name3 = "test_logging_file_1.txt"
@@ -12,24 +13,24 @@ experiment_name = "Testing Correlations"
 
 mode = "test" #or test
 
-f = open(file_name, 'r')
+f = open(dir + file_name, 'r')
 lines = f.readlines()
 
 
-f2 = open(file_name2, 'r')
+f2 = open(dir + file_name2, 'r')
 lines2 = f2.readlines()
 
 
-f3 = open(file_name3, 'r')
+f3 = open(dir + file_name3, 'r')
 lines3 = f3.readlines()
 
-f4 = open(file_name4, 'r')
+f4 = open(dir + file_name4, 'r')
 lines4 = f4.readlines()
 
-f5 = open(file_name5, 'r')
+f5 = open(dir + file_name5, 'r')
 lines5 = f5.readlines()
 
-f6 = open(file_name6, 'r')
+f6 = open(dir + file_name6, 'r')
 lines6= f6.readlines()
 
 mode_label = None
