@@ -238,7 +238,7 @@ def best_fit(X, Y):
 
 
 
-plt.plot(range(len(losses[:20])), losses[:20], '-r', label = 'c3d attn')
+# plt.plot(range(len(losses[:20])), losses[:20], '-r', label = 'c3d attn')
 plt.plot(range(len(losses_2)), losses_2, '-b', label = 'c3d')
 # plt.plot(range(len(losses_3)[:20]), losses_3[:20], '-g', label = 's3d')
 # plt.plot(range(len(losses_4[:20])), losses_4[:20], '-k', label = 's3d attn')
