@@ -2,8 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 dir = "logs/"
-file_name = "c3d_attn_train_logging_file_1.txt"
-file_name2 = "c3davg_train_logging_file_1.txt"
+saving_dir = "loss_results/"
+file_name = "c3davg_train_logging_file_1.txt"
+file_name2 = "c3d_attn_train_logging_file_1.txt"
+# file_name = "c3d_attn_train_logging_file_1.txt"
+# file_name2 = "c3davg_train_logging_file_1.txt"
 file_name3 = "train_logging_file_1.txt"
 file_name4 = "s3d_attn_train_logging_file_1.txt"
 file_name5 = "c3davg_8_gru_attn_train_logging_file_1.txt"
@@ -59,15 +62,76 @@ if __name__ == "__main__":
 
     losses_6 = parse_logs(file_name6)
 
-    plt.plot(range(len(losses)), losses, '-r', label = 'c3d attn')
-    plt.plot(range(len(losses_2)), losses_2, '-b', label = 'c3d')
-    plt.plot(range(len(losses_3)), losses_3, '-g', label = 's3d')
-    plt.plot(range(len(losses_4)), losses_4, '-k', label = 's3d attn')
-    plt.plot(range(len(losses_5)), losses_5, '-m', label = '8 gru attn')
-    plt.plot(range(len(losses_6)), losses_6, '-c', label = '8 lstm attn')
+    plt.figure(0)
+    plt.plot(range(len(losses)), losses, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(losses_2)), losses_2, '-r', linewidth=1, label = 'C3D + Attn')
+    plt.plot(range(len(losses_3)), losses_3, '-g', linewidth=1, label = 'S3D')
+    plt.plot(range(len(losses_4)), losses_4, '-k', linewidth=1, label = 'S3D + Attn')
+    plt.plot(range(len(losses_5)), losses_5, '-m', linewidth=1, label = 'C3D + 8 GRUs + Attn')
+    plt.plot(range(len(losses_6)), losses_6, '-c', linewidth=1, label = 'C3D + 8 LSTMs + Attn')
     plt.legend(loc = 'best')
 
     plt.title(experiment_name, fontsize=20)
     plt.xlabel('Epoch', fontsize=18)
     plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
-    plt.savefig("Training Losses")
+    plt.savefig(saving_dir + "Training Losses")
+
+    # 1:1 Comparisons
+    plt.figure(1)
+    plt.title('(a) C3D vs C3D + Attn')
+    plt.plot(range(len(losses)), losses, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(losses_2)), losses_2, '-r', linewidth=1, label = 'C3D + Attn')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs C3D + Attn")
+
+    plt.figure(2)
+    plt.title('(b) C3D vs S3D')
+    plt.plot(range(len(losses)), losses, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(losses_3)), losses_3, '-g', linewidth=1, label = 'S3D')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs S3D")
+
+    plt.figure(3)
+    plt.title('(c) C3D vs S3D + Attn')
+    plt.plot(range(len(losses)), losses, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(losses_4)), losses_4, '-k', linewidth=1, label = 'S3D + Attn')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs S3D + Attn")
+
+    plt.figure(4)
+    plt.title('(d) C3D vs C3D + 8 GRUS + Attn')
+    plt.plot(range(len(losses)), losses, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(losses_5)), losses_5, '-m', linewidth=1, label = 'C3D + 8 GRUs + Attn')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs C3D + 8 GRUS + Attn")
+
+    plt.figure(5)
+    plt.title('(e) C3D vs C3D + 8 LSTMs + Attn')
+    plt.plot(range(len(losses)), losses, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(losses_6)), losses_6, '-c', linewidth=1, label = 'C3D + 8 LSTMs + Attn')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs C3D + 8 LSTMs + Attn")
+
+    # Bar Graph
+    plt.figure(6)
+    plt.title('Final Losses')
+    x = ['C3D', 'C3D + Attn', 'S3D', 'S3D + Attn', 'C3D + 8 GRUs + Attn', 'C3D + 8 LSTMs + Attn']
+    avgs = [losses[-1], losses_2[-1], losses_3[-1], losses_4[-1], losses_5[-1], losses_6[-1]]
+
+    x_pos = [i for i, _ in enumerate(x)]
+
+    plt.bar(x_pos, avgs, color='green')
+    plt.xlabel('Experiment', fontsize=18)
+    plt.ylabel('{} Final Loss'.format(mode_label), fontsize=16)
+    plt.xticks(x_pos, x)
+    plt.savefig(saving_dir + "bar")

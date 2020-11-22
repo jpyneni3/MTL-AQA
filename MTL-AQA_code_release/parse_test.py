@@ -2,8 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 dir = "logs/"
-file_name = "c3d_attn_test_logging_file_1.txt"
-file_name2 = "c3davg_test_logging_file_1.txt"
+saving_dir = "correlation_results/"
+file_name = "c3davg_test_logging_file_1.txt"
+file_name2 = "c3d_attn_test_logging_file_1.txt"
+# file_name = "c3d_attn_test_logging_file_1.txt"
+# file_name2 = "c3davg_test_logging_file_1.txt"
 file_name3 = "test_logging_file_1.txt"
 file_name4 = "s3d_attn_test_logging_file_1.txt"
 file_name5 = "c3davg_8_gru_attn_test_logging_file_1.txt"
@@ -13,79 +16,108 @@ experiment_name = "Testing Correlations"
 
 mode = "test" #or test
 
-f = open(dir + file_name, 'r')
-lines = f.readlines()
-
-
-f2 = open(dir + file_name2, 'r')
-lines2 = f2.readlines()
-
-
-f3 = open(dir + file_name3, 'r')
-lines3 = f3.readlines()
-
-f4 = open(dir + file_name4, 'r')
-lines4 = f4.readlines()
-
-f5 = open(dir + file_name5, 'r')
-lines5 = f5.readlines()
-
-f6 = open(dir + file_name6, 'r')
-lines6= f6.readlines()
-
 mode_label = None
 if mode == 'train':
     mode_label = "Training"
 else:
     mode_label = "Testing"
 
-corr1 = []
-for i in range(len(lines)/3):
-    epoch = lines[i*3:i*3+3]
-    corr = float(epoch[1:2][0].split(':')[1])
-    corr1.append(corr)
+def parse_logs(file_name):
+    f = open(dir + file_name, 'r')
+    lines = f.readlines()
 
-corr2 = []
-for i in range(len(lines2)/3):
-    epoch = lines2[i*3:i*3+3]
-    corr = float(epoch[1:2][0].split(':')[1])
-    corr2.append(corr)
+    corr_list = []
+    for i in range(int(len(lines)/3)):
+        epoch = lines[i*3:i*3+3]
+        corr = float(epoch[1:2][0].split(':')[1])
+        corr_list.append(corr)
 
-corr3 = []
-for i in range(len(lines3)/3):
-    epoch = lines3[i*3:i*3+3]
-    corr = float(epoch[1:2][0].split(':')[1])
-    corr3.append(corr)
+    return corr_list
 
-corr4 = []
-for i in range(len(lines4)/3):
-    epoch = lines4[i*3:i*3+3]
-    corr = float(epoch[1:2][0].split(':')[1])
-    corr4.append(corr)
+if __name__ == "__main__":
+    corr1 = parse_logs(file_name)
 
-corr5 = []
-for i in range(len(lines5)/3):
-    epoch = lines5[i*3:i*3+3]
-    corr = float(epoch[1:2][0].split(':')[1])
-    corr5.append(corr)
+    corr2 = parse_logs(file_name2)
 
-corr6 = []
-for i in range(len(lines6)/3):
-    epoch = lines6[i*3:i*3+3]
-    corr = float(epoch[1:2][0].split(':')[1])
-    corr6.append(corr)
+    corr3 = parse_logs(file_name3)
+
+    corr4 = parse_logs(file_name4)
+
+    corr5 = parse_logs(file_name5)
+
+    corr6 = parse_logs(file_name6)
+
+    plt.figure(0)
+    plt.plot(range(len(corr1)), corr1, '-b', label = 'C3D')
+    plt.plot(range(len(corr2)), corr2, '-r', label = 'C3D + Attn')
+    plt.plot(range(len(corr3)), corr3, '-g', label = 'S3D')
+    plt.plot(range(len(corr4)), corr4, '-k', label = 'S3D + Attn')
+    plt.plot(range(len(corr5)), corr5, '-m', label = 'C3D + 8 GRUs + Attn')
+    plt.plot(range(len(corr6)), corr6, '-c', label = 'C3D + 8 LSTMs + Attn')
+    plt.legend(loc = 'best')
 
 
-plt.plot(range(len(corr1)), corr1, '-r', label = 'c3d attn')
-plt.plot(range(len(corr2)), corr2, '-b', label = 'c3d')
-plt.plot(range(len(corr3)), corr3, '-g', label = 's3d')
-plt.plot(range(len(corr4)), corr4, '-k', label = 's3d attn')
-plt.plot(range(len(corr5)), corr5, '-m', label = '8 gru attn')
-plt.plot(range(len(corr6)), corr6, '-c', label = '8 lstm attn')
-plt.legend(loc = 'best')
+    plt.title(experiment_name, fontsize=20)
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('Correlation'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "Testing Correlations")
 
+    # 1:1 Comparisons
+    plt.figure(1)
+    plt.title('(a) C3D vs C3D + Attn')
+    plt.plot(range(len(corr1)), corr1, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(corr2)), corr2, '-r', linewidth=1, label = 'C3D + Attn')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs C3D + Attn")
 
-plt.title(experiment_name, fontsize=20)
-plt.xlabel('Epoch', fontsize=18)
-plt.ylabel('Correlation'.format(mode_label), fontsize=16)
-plt.savefig("Testing Correlations")
+    plt.figure(2)
+    plt.title('(b) C3D vs S3D')
+    plt.plot(range(len(corr1)), corr1, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(corr3)), corr3, '-g', linewidth=1, label = 'S3D')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs S3D")
+
+    plt.figure(3)
+    plt.title('(c) C3D vs S3D + Attn')
+    plt.plot(range(len(corr1)), corr1, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(corr4)), corr4, '-k', linewidth=1, label = 'S3D + Attn')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs S3D + Attn")
+
+    plt.figure(4)
+    plt.title('(d) C3D vs C3D + 8 GRUS + Attn')
+    plt.plot(range(len(corr1)), corr1, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(corr5)), corr5, '-m', linewidth=1, label = 'C3D + 8 GRUs + Attn')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs C3D + 8 GRUS + Attn")
+
+    plt.figure(5)
+    plt.title('(e) C3D vs C3D + 8 LSTMs + Attn')
+    plt.plot(range(len(corr1)), corr1, '-b', linewidth=1, label = 'C3D')
+    plt.plot(range(len(corr6)), corr6, '-c', linewidth=1, label = 'C3D + 8 LSTMs + Attn')
+    plt.legend(loc = 'best')
+    plt.xlabel('Epoch', fontsize=18)
+    plt.ylabel('{} Loss'.format(mode_label), fontsize=16)
+    plt.savefig(saving_dir + "C3D vs C3D + 8 LSTMs + Attn")
+
+    # Bar Graph
+    plt.figure(6)
+    plt.title('Final Correlations')
+    x = ['C3D', 'C3D + Attn', 'S3D', 'S3D + Attn', 'C3D + 8 GRUs + Attn', 'C3D + 8 LSTMs + Attn']
+    avgs = [corr1[-1], corr2[-1], corr3[-1], corr4[-1], corr5[-1], corr6[-1]]
+
+    x_pos = [i for i, _ in enumerate(x)]
+
+    plt.bar(x_pos, avgs, color='green')
+    plt.xlabel('Experiment', fontsize=18)
+    plt.ylabel('{} Final Correlations'.format(mode_label), fontsize=16)
+    plt.xticks(x_pos, x)
+    plt.savefig(saving_dir + "bar")
