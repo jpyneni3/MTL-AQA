@@ -244,7 +244,7 @@ plt.plot(range(len(losses_2)), losses_2, '-b', label = 'c3d')
 # plt.plot(range(len(losses_4)), losses_4, '-k', label = 's3d attn')
 plt.plot(range(len(losses_5)), losses_5, '-m', label = '8 gru attn')
 # plt.plot(range(len(losses_6)), losses_6, '-c', label = '8 lstm attn')
-plt.legend()
+plt.legend(loc = 'best')
 
 
 

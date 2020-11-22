@@ -75,13 +75,13 @@ for i in range(len(lines6)/3):
     corr6.append(corr)
 
 
-# plt.plot(range(len(corr1)), corr1, '-r', label = 'c3d attn')
+plt.plot(range(len(corr1)), corr1, '-r', label = 'c3d attn')
 plt.plot(range(len(corr2)), corr2, '-b', label = 'c3d')
-# plt.plot(range(len(corr3)), corr3, '-g', label = 's3d')
-# plt.plot(range(len(corr4)), corr4, '-k', label = 's3d attn')
+plt.plot(range(len(corr3)), corr3, '-g', label = 's3d')
+plt.plot(range(len(corr4)), corr4, '-k', label = 's3d attn')
 plt.plot(range(len(corr5)), corr5, '-m', label = '8 gru attn')
 plt.plot(range(len(corr6)), corr6, '-c', label = '8 lstm attn')
-plt.legend()
+plt.legend(loc = 'best')
 
 
 plt.title(experiment_name, fontsize=20)
