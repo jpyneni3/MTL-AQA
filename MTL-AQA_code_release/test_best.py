@@ -30,7 +30,7 @@ import numpy as np
 torch.manual_seed(randomseed); torch.cuda.manual_seed_all(randomseed); random.seed(randomseed); np.random.seed(randomseed)
 torch.backends.cudnn.deterministic=True
 
-# current_run = 1 # CHANGE THIS FOR LOG FILE (BEFORE RUNNING HAPPENS)
+current_run = 1 # CHANGE THIS FOR LOG FILE (BEFORE RUNNING HAPPENS)
 # train_logging_file_name = "c3davg_train_logging_file_" + str(current_run) + ".txt"
 # train_logging_file_name = "c3davg_8_gru_train_logging_file_" + str(current_run) + ".txt"
 # train_logging_file = open(train_logging_file_name,"x")
