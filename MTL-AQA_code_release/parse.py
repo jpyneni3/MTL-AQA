@@ -11,6 +11,7 @@ file_name3 = "train_logging_file_1.txt"
 file_name4 = "s3d_attn_train_logging_file_1.txt"
 file_name5 = "c3davg_8_gru_attn_train_logging_file_1.txt"
 file_name6 = "c3davg_8_lstm_attn_train_logging_file_1.txt"
+file_name7 = "c3davg_8_gru_train_logging_file_1.txt"
 
 experiment_name = "Training Losses"
 
@@ -62,6 +63,8 @@ if __name__ == "__main__":
 
     losses_6 = parse_logs(file_name6)
 
+    # losses_7 = parse_logs(file_name7)
+    
     plt.figure(0)
     plt.plot(range(len(losses)), losses, '-b', linewidth=1, label = 'C3D')
     plt.plot(range(len(losses_2)), losses_2, '-r', linewidth=1, label = 'C3D + Attn')
@@ -69,6 +72,7 @@ if __name__ == "__main__":
     plt.plot(range(len(losses_4)), losses_4, 'orange', linewidth=1, label = 'S3D + Attn')
     plt.plot(range(len(losses_5)), losses_5, '-m', linewidth=1, label = 'C3D + 8 GRUs + Attn')
     plt.plot(range(len(losses_6)), losses_6, '-c', linewidth=1, label = 'C3D + 8 LSTMs + Attn')
+    # plt.plot(range(len(losses_7)), losses_7, 'y', linewidth=1, label = "C3D + 8 GRUs")
     plt.legend(loc = 'best')
 
     plt.title(experiment_name, fontsize=20)
