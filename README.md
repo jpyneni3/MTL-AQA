@@ -15,7 +15,8 @@ This project aims to experiment on the MTL-AQA architecture designed by Paritosh
 
 ### Table of Contents
 **[1) Data](#1-data-collection)**<br>
-**[2) Experiments](#2-experiments)**<br>
+**[2) Setup](#2-setup)**<br>
+**[3) Experiments](#3-experiments)**<br>
 <!-- **[3) Data Augmentation](#3-data-augmentation)**<br>
 **[4) Models](#4-models)**<br>
 **[5) Experiment Outputs](#5-experiment-outputs)**<br>
@@ -29,14 +30,14 @@ To collect the necessary data for this project (about 60 GB), follow these steps
 2)Run the youtube_mp4_converter.py script that was written by us. This will download the videos of Diving competitions from the links in the Video_List.xlsx file.  
 3) Run the frame_extractor.sh script to convert the videos into the frames that will be indexed by the dataloader for the project  
 
+## 2) Setup
 
-
-## 2) Experiments
+## 3) Experiments
 The below table, for each experiment, lists which file in /MTL-AQA_code_release to run, necessary changes to make in that file, necessary changes to make in opts.py,  and the location of train and test logs we got for that experiment. For each model, make sure to make a new saving directory and update the saving_dir variable with in the *_test_train.py file corresponding to that experiment.
 
 |  Experiment Number |  Description | File (run) | Changes | Train Log |   Test Log |
 |---|---|---|---| ---| ---|
-| 1 | C3DAVG model (baseline)  | File (run) | Changes | c3davg_train_logging_file_1 | c3davg_test_logging_file_1  |
+| 1 | C3DAVG model (baseline)  | train_test_C3DAVG.py | Changes | c3davg_train_logging_file_1 | c3davg_test_logging_file_1  |
 | 2 | C3DAVG model with SGD Backbone  | File (run) | Changes | train_logging_file_1 | test_logging_file_1  |
 | 3 | C3DAVG model with Attention  | File (run) | Changes | c3d_attn_train_logging_file_1.txt   | c3d_attn_test_logging_file_1.txt  |
 |4  |   |   |   | | |
