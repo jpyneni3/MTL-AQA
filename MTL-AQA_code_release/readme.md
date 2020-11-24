@@ -1,14 +1,20 @@
 Set the options in opts.py file, and train_test files.
 
-C3D Model:  
+##Model Setup and References:
+
+C3D Model[1]:  
 Download the pretrained C3D weights [from here](http://imagelab.ing.unimore.it/files/c3d_pytorch/c3d.pickle)  
 Rename as c3d.pickle  
-Provided by Parmar and Morris  [1]
+Provided by Parmar and Morris  
 
-S3D Model:
+S3D Model[2]:
 Download the pretrained S3D weights [from here] (https://drive.google.com/uc?export=download&id=1HJVDBOQpnTMDVUM3SsXLy0HUkf_wryGO)  
 Rename as S3D_kinetics400.pt  
 Provided by Kyle Min and Jason Corso [2]
+
+LSTM Autoencoder[3]:
+/models/C3DAVG/LSTM_autoencoder.py
+
 
 
 [1]
@@ -30,6 +36,20 @@ Provided by Kyle Min and Jason Corso [2]
   booktitle={Proceedings of the IEEE International Conference on Computer Vision},
   pages={2394--2403},
   year={2019}
+}
+```
+[3]
+```
+@article{DBLP:journals/corr/SrivastavaMS15,
+  author    = {Nitish Srivastava and
+               Elman Mansimov and
+               Ruslan Salakhutdinov},
+  title     = {Unsupervised Learning of Video Representations using LSTMs},
+  journal   = {CoRR},
+  volume    = {abs/1502.04681},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1502.04681},
+  archivePrefix = {arXiv}
 }
 ```
 
