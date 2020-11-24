@@ -34,9 +34,9 @@ To collect the necessary data for this project (about 60 GB), follow these steps
 ## 2) Experiments
 The below table, for each experiment, lists which file in /MTL-AQA_code_release to run, necessary changes to make in that file, necessary changes to make in opts.py,  and the location of train and test logs we got for that experiment. For each model, make sure to make a new saving directory and update the saving_dir variable with in the *_test_train.py file corresponding to that experiment.
 
-|  Experiment Number |  Description | Train  |  Test |  Model Folder |
+|  Experiment Number |  Description | File (run) | Changes | Train Log |  Train Log |  Test Log |
 |---|---|---|---| ---|
-| 1 | C3DAVG model (baseline)  |  c3davg_train_logging_file_1 | c3davg_test_logging_file_1  | c3davg_140_saved |
-| 2 | C3DAVG model with SGD Backbone  |  train_logging_file_1 | test_logging_file_1  |c3davg_140_saved_s3d |  
-| 3 | C3DAVG model with Attention  | c3d_attn_train_logging_file_1.txt   | c3d_attn_test_logging_file_1.txt  | c3davg_140_saved_attn  |
-|4  |   |   |   | |
+| 1 | C3DAVG model (baseline)  | File (run) | Changes | c3davg_train_logging_file_1 | c3davg_test_logging_file_1  |
+| 2 | C3DAVG model with SGD Backbone  | File (run) | Changes | train_logging_file_1 | test_logging_file_1  |
+| 3 | C3DAVG model with Attention  | File (run) | Changes | c3d_attn_train_logging_file_1.txt   | c3d_attn_test_logging_file_1.txt  |
+|4  |   |   |   | | |
