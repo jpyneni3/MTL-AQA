@@ -9,6 +9,8 @@
 
 Experiments by [Akhila Ballari](https://github.com/aballari9),[Jas Pyneni](https://github.com/jpyneni3), and [Nitya Tarakad](https://github.com/nitarakad)
 
+[View our research paper](research_paper.pdf)
+
 This project aims to experiment on the MTL-AQA architecture designed by Paritosh Parmar and Brendan Tran Morris, [What and How Well You Performed? A Multitask Learning Approach to Action Quality Assessment](https://arxiv.org/abs/1904.04346). This repository is forked from [their code],(https://github.com/ParitoshParmar/MTL-AQA)
 
 
@@ -17,10 +19,7 @@ This project aims to experiment on the MTL-AQA architecture designed by Paritosh
 **[1) Data](#1-data-collection)**<br>
 **[2) Setup](#2-setup)**<br>
 **[3) Experiments](#3-experiments)**<br>
-<!-- **[3) Data Augmentation](#3-data-augmentation)**<br>
-**[4) Models](#4-models)**<br>
-**[5) Experiment Outputs](#5-experiment-outputs)**<br>
-**[6) Web App](#6-web-app)**<br> -->
+**[4) Analysis](#4-analysis)**<br>
 
 
 ## 1) Data
@@ -49,3 +48,6 @@ The below table, for each experiment, lists which file in /MTL-AQA_code_release 
 | 4 | C3DAVG model with Attention and stacked GRUs |  train_test_C3DAVG.py | use_attn=True caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 8 | c3davg_8_gru_attn_train_logging_file_1.txt | c3davg_8_gru_attn_test_logging_file_1.txt  |
 | 5 | C3DAVG model with Attention and stacked LSTMS |  train_test_C3DAVG.py | use_attn=True caption_lstm_cell_type = 'lstm'   caption_lstm_num_layers = 8 | c3davg_8_lstm_attn_train_logging_file_1.txt | c3davg_8_lstm_attn_test_logging_file_1.txt  |
 | 6 | C3DAVG model with LSTM encoding of frames |  train_test_LSTM_autoencoder.py | caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 2 |  | |
+
+## 4) Analysis
+Once the log files are populated, run ```parse.py``` and ```parse_test.py``` to get the graphs from our paper
