@@ -42,7 +42,10 @@ The below table, for each experiment, lists which file in /MTL-AQA_code_release 
 
 |  Experiment Number |  Description | File (run) | Changes | Train Log |   Test Log |
 |---|---|---|---| ---| ---|
-| 1 | C3DAVG model (baseline)  | train_test_C3DAVG.py | caption_lstm_cell_type = 'gru'\   caption_lstm_num_layers = 2 | c3davg_train_logging_file_1 | c3davg_test_logging_file_1  |
-| 2 | C3DAVG model with SGD Backbone  | File (run) | Changes | train_logging_file_1 | test_logging_file_1  |
-| 3 | C3DAVG model with Attention  | File (run) | Changes | c3d_attn_train_logging_file_1.txt   | c3d_attn_test_logging_file_1.txt  |
-|4  |   |   |   | | |
+| 0 | C3DAVG model (baseline)  | train_test_C3DAVG.py | caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 2 |c3davg_train_logging_file_1.txt | c3davg_test_logging_file_1.txt  |
+| 1 | C3DAVG model with Attention  |  train_test_C3DAVG_S3D.py | use_attn=True caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 2 | c3d_attn_train_logging_file_1.txt | c3d_attn_test_logging_file_1.txt  |
+| 2 | C3DAVG model with SGD Backbone  |  train_test_C3DAVG_S3D.py | caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 2 | train_logging_file_1.txt | test_logging_file_1.txt  |
+| 3 | C3DAVG model with SGD Backbone and Attention  | train_test_C3DAVG_S3D.py | use_attn=True caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 2 | s3d_attn_train_logging_file_1.txt   | s3d_attn_test_logging_file_1.txt  |
+| 4 | C3DAVG model with Attention and stacked GRUs |  train_test_C3DAVG.py | use_attn=True caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 8 | c3davg_8_gru_attn_train_logging_file_1.txt | c3davg_8_gru_attn_test_logging_file_1.txt  |
+| 5 | C3DAVG model with Attention and stacked LSTMS |  train_test_C3DAVG.py | use_attn=True caption_lstm_cell_type = 'lstm'   caption_lstm_num_layers = 8 | c3davg_8_lstm_attn_train_logging_file_1.txt | c3davg_8_lstm_attn_test_logging_file_1.txt  |
+| 6 | C3DAVG model with LSTM encoding of frames |  train_test_LSTM_autoencoder.py | caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 2 |  | |
