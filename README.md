@@ -25,6 +25,7 @@ This project aims to experiment on the MTL-AQA architecture designed by Paritosh
 ## 1) Data
 To collect the necessary data for this project (about 60 GB), follow these steps:
 
-1)Navigate to /MTL-AQA_dataset_release
-2)Run the youtube_mp4_converter.py script that was written by us. This will download the videos of Diving competitions from the links in the Video_List.xlsx file.
-3) Run the frame_extractor.sh script to convert the videos into the frames that will be indexed by the dataloader for the project
+1)Navigate to /MTL-AQA_dataset_release  
+2)Run the youtube_mp4_converter.py script that was written by us. This will download the videos of Diving competitions from the links in the Video_List.xlsx file.  
+3) Run the frame_extractor.sh script to convert the videos into the frames that will be indexed by the dataloader for the project  
+
