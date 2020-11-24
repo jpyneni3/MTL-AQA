@@ -47,7 +47,8 @@ The below table, for each experiment, lists which file in /MTL-AQA_code_release 
 | 3 | C3DAVG model with SGD Backbone and Attention  | train_test_C3DAVG_S3D.py | use_attn=True caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 2 | s3d_attn_train_logging_file_1.txt   | s3d_attn_test_logging_file_1.txt  |
 | 4 | C3DAVG model with Attention and stacked GRUs |  train_test_C3DAVG.py | use_attn=True caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 8 | c3davg_8_gru_attn_train_logging_file_1.txt | c3davg_8_gru_attn_test_logging_file_1.txt  |
 | 5 | C3DAVG model with Attention and stacked LSTMS |  train_test_C3DAVG.py | use_attn=True caption_lstm_cell_type = 'lstm'   caption_lstm_num_layers = 8 | c3davg_8_lstm_attn_train_logging_file_1.txt | c3davg_8_lstm_attn_test_logging_file_1.txt  |
-| 6 | C3DAVG model with LSTM encoding of frames |  train_test_LSTM_autoencoder.py | caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 2 |  | |
+| 6 | C3DAVG model with 2 LSTMs |  train_test_C3DAVG.py | caption_lstm_cell_type = 'LSTM'   caption_lstm_num_layers = 2 |  | |
+| 7 | C3DAVG model with LSTM encoding of frames |  train_test_LSTM_autoencoder.py | caption_lstm_cell_type = 'gru'   caption_lstm_num_layers = 2 |  | |
 
 ## 4) Analysis
 Once the log files are populated, run ```parse.py``` and ```parse_test.py``` to get the graphs from our paper
