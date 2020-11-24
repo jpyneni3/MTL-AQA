@@ -31,6 +31,7 @@ To collect the necessary data for this project (about 60 GB), follow these steps
 3) Run the frame_extractor.sh script to convert the videos into the frames that will be indexed by the dataloader for the project  
 
 ## 2) Setup
+Follow the directions in /MTL-AQA_code_release/readme.md to download the pre-trained weights for both backbones
 
 ## 3) Experiments
 The below table, for each experiment, lists which file in /MTL-AQA_code_release to run, necessary changes to make in that file, necessary changes to make in opts.py,  and the location of train and test logs we got for that experiment. For each model, make sure to make a new saving directory and update the saving_dir variable with in the *_test_train.py file corresponding to that experiment.
