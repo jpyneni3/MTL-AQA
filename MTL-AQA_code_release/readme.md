@@ -11,20 +11,25 @@ Rename as S3D_kinetics400.pt
 Provided by Kyle Min and Jason Corso [2]
 
 
-[1]@inproceedings{mtlaqa,
+[1]
+```
+@inproceedings{mtlaqa,
   title={What and How Well You Performed? A Multitask Learning Approach to Action Quality Assessment},
   author={Parmar, Paritosh and Tran Morris, Brendan},
   booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
   pages={304--313},
   year={2019}
 }
+```
 
-[2] @inproceedings{min2019tased,
+[2]
+```
+@inproceedings{min2019tased,
   title={TASED-Net: Temporally-Aggregating Spatial Encoder-Decoder Network for Video Saliency Detection},
   author={Min, Kyle and Corso, Jason J},
   booktitle={Proceedings of the IEEE International Conference on Computer Vision},
   pages={2394--2403},
   year={2019}
 }
-
+```
 

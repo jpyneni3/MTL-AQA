@@ -31,14 +31,19 @@ To collect the necessary data for this project (about 60 GB), follow these steps
 3) Run the frame_extractor.sh script to convert the videos into the frames that will be indexed by the dataloader for the project  
 
 ## 2) Setup
-Follow the directions in /MTL-AQA_code_release/readme.md to download the pre-trained weights for both backbones
+Follow the directions in /MTL-AQA_code_release/readme.md to download the pre-trained weights for both backbones   
+
+For models that use attention for the downstream task of generating captions, set the use_attn=True variable, in the corresponding train_test.py file for that model, in the initialization of the S2VTModel.  
+
+Make the necessary variable chances in opts.py based upon the table below  
 
 ## 3) Experiments
-The below table, for each experiment, lists which file in /MTL-AQA_code_release to run, necessary changes to make in that file, necessary changes to make in opts.py,  and the location of train and test logs we got for that experiment. For each model, make sure to make a new saving directory and update the saving_dir variable with in the *_test_train.py file corresponding to that experiment.
+The below table, for each experiment, lists which file in /MTL-AQA_code_release to run, necessary variable changes to make in opts.py,  and the location of train and test logs we got for that experiment. For each model, make sure to make a new saving directory and update the saving_dir variable with in the *_test_train.py file corresponding to that experiment.
 
 |  Experiment Number |  Description | File (run) | Changes | Train Log |   Test Log |
 |---|---|---|---| ---| ---|
-| 1 | C3DAVG model (baseline)  | train_test_C3DAVG.py | Changes | c3davg_train_logging_file_1 | c3davg_test_logging_file_1  |
+| 1 | C3DAVG model (baseline)  | train_test_C3DAVG.py | caption_lstm_cell_type = 'gru'
+caption_lstm_num_layers = 2 | c3davg_train_logging_file_1 | c3davg_test_logging_file_1  |
 | 2 | C3DAVG model with SGD Backbone  | File (run) | Changes | train_logging_file_1 | test_logging_file_1  |
 | 3 | C3DAVG model with Attention  | File (run) | Changes | c3d_attn_train_logging_file_1.txt   | c3d_attn_test_logging_file_1.txt  |
 |4  |   |   |   | | |
