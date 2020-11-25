@@ -21,7 +21,15 @@ This project aims to experiment on the MTL-AQA architecture designed by Paritosh
 **[3) Experiments](#3-experiments)**<br>
 **[4) Analysis](#4-analysis)**<br>
 
+### Requirements
 
+```
+Pytorch
+ffmpeg
+pytube
+numpy
+scipy
+```
 ## 1) Data
 To collect the necessary data for this project (about 60 GB), follow these steps:
 
